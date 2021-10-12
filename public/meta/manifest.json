@@ -1,0 +1,14 @@
+{
+  "name": "Instagram Clone",
+  "short_name": "Instagram Clone",
+  "icons": [
+    {
+      "src": "/meta/icon.png",
+      "sizes": "512x512"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "https://instagram-clone-martstech.vercel.app"
+}
