@@ -1,7 +1,7 @@
-import Home from "modules/home/Home";
+import Home from "modules/feed/Feed";
 import Head from "next/head";
 
-const HomePage = () => {
+const FeedPage = () => {
   return (
     <>
       <Head>
@@ -12,4 +12,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default FeedPage;

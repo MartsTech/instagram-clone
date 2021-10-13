@@ -13,7 +13,7 @@ const HeaderLogo = () => {
       </div>
       <div className="relative w-10 lg:hidden flex-shrink-0 cursor-pointer">
         <Image
-          src="/images/logo-icon.png"
+          src="/images/logo-mobile.png"
           alt="mobile logo"
           layout="fill"
           objectFit="contain"
