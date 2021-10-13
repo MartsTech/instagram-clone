@@ -24,6 +24,13 @@ yarn check-types ||
     false;
 )
 
+# Check tests
+yarn test ||
+(
+    echo '❌ Failed tests. Make the changes required above.'
+    false;
+)
+
 # If everything passes... Now we can commit
 echo '✨ Trying to build now...'
 
