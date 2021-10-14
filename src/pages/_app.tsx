@@ -5,7 +5,7 @@ import { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { store, StoreContext } from "stores/store";
-import "styles/globals.css";
+import "tailwindcss/tailwind.css";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (

@@ -1,4 +1,4 @@
-import Home from "modules/feed/Feed";
+import Feed from "modules/feed/Feed";
 import Head from "next/head";
 
 const FeedPage = () => {
@@ -7,7 +7,7 @@ const FeedPage = () => {
       <Head>
         <title>Instagram Clone</title>
       </Head>
-      <Home />
+      <Feed />
     </>
   );
 };
