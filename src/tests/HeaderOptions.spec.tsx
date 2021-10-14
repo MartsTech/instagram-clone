@@ -2,7 +2,7 @@ import { HomeIcon } from "@heroicons/react/outline";
 import HeaderOptionsItem, {
   HeaderOptionsItemProps,
 } from "components/header/HeaderOptionsItem";
-import { render } from "../../test-utils";
+import { render } from "./test-utils";
 
 describe("HeaderOptionsItem", () => {
   let expectedProps: HeaderOptionsItemProps;

@@ -1,6 +1,6 @@
 import { Story } from "types/story";
 
-interface StoriesItemProps {
+export interface StoriesItemProps {
   story: Story;
 }
 
