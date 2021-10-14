@@ -2,15 +2,17 @@ export interface HeaderOptionsItemProps {
   Icon: (props: React.ComponentProps<"svg">) => JSX.Element;
   IconClass?: string;
   count?: number;
+  onClick?: () => void;
 }
 
 const HeaderOptionsItem: React.FC<HeaderOptionsItemProps> = ({
   Icon,
   IconClass,
   count = 0,
+  onClick,
 }) => {
   return (
-    <div className="relative hidden md:inline-flex">
+    <div className="relative hidden md:inline-flex" onClick={onClick}>
       <Icon
         className={`h-6 cursor-pointer hover:scale-125 transition-all duration-150 ease-out 
         ${IconClass}`}

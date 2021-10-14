@@ -1,16 +1,17 @@
 import faker from "faker";
 import StoriesItem, { StoriesItemProps } from "modules/stories/StoriesItem";
+import { Story } from "types/story";
 import { render } from "./test-utils";
 
 describe("StoriesItem", () => {
   let expectedProps: StoriesItemProps;
 
   beforeEach(() => {
+    const story: Story = { ...faker.helpers.contextualCard(), id: 1 };
+
     expectedProps = {
-      story: {
-        ...faker.helpers.contextualCard(),
-        id: 1,
-      },
+      avatar: story.avatar,
+      username: story.username,
     };
   });
 
@@ -19,7 +20,7 @@ describe("StoriesItem", () => {
       <StoriesItem {...expectedProps} />
     );
 
-    const { username } = expectedProps.story;
+    const { username } = expectedProps;
 
     const text = getByText(username);
     const image = getByAltText(username);

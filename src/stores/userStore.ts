@@ -44,7 +44,7 @@ class UserStore {
     if (user) {
       this.user = {
         email: user.email!,
-        displayName: user.displayName!,
+        displayName: user.displayName!.split(" ").join("_").toLocaleLowerCase(),
         photoURL: user.photoURL,
       };
     } else {

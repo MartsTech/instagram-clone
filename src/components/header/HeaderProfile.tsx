@@ -1,16 +1,22 @@
+import { observer } from "mobx-react-lite";
 import { useStore } from "stores/store";
 
 const HeaderProfile = () => {
-  const { user } = useStore().userStore;
+  const { user, signOut } = useStore().userStore;
 
   return (
-    <img
-      loading="lazy"
-      src={user?.photoURL || undefined}
-      alt="profile"
-      className="h-10 rounded-full cursor-pointer"
-    />
+    <>
+      {user && (
+        <img
+          loading="lazy"
+          src={user.photoURL || undefined}
+          alt="profile"
+          onClick={signOut}
+          className="h-10 w-10 rounded-full cursor-pointer"
+        />
+      )}
+    </>
   );
 };
 
-export default HeaderProfile;
+export default observer(HeaderProfile);

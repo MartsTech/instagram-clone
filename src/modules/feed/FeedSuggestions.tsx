@@ -1,4 +1,3 @@
-
 import FeedSuggestionsItems from "./FeedSuggestionsItems";
 
 const FeedSuggestions = () => {
