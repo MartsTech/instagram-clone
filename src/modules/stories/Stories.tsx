@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useStore } from "stores/store";
 import StoriesItem from "./StoriesItem";
 
@@ -16,4 +17,4 @@ const Stories = () => {
   );
 };
 
-export default Stories;
+export default observer(Stories);

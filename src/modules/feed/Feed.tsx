@@ -1,4 +1,5 @@
 import Header from "components/header/Header";
+import Posts from "modules/posts/Posts";
 import Stories from "modules/stories/Stories";
 
 const Feed = () => {
@@ -14,6 +15,7 @@ const Feed = () => {
       >
         <section className="col-span-2">
           <Stories />
+          <Posts />
         </section>
       </main>
     </div>

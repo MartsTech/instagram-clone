@@ -1,6 +1,11 @@
 const HeaderProfile = () => {
   return (
-    <img src="" alt="profile" className="h-10 rounded-full cursor-pointer" />
+    <img
+      loading="lazy"
+      src=""
+      alt="profile"
+      className="h-10 rounded-full cursor-pointer"
+    />
   );
 };
 
