@@ -1,6 +1,8 @@
 import Header from "components/header/Header";
 import Posts from "modules/posts/Posts";
 import Stories from "modules/stories/Stories";
+import FeedProfile from "./FeedProfile";
+import FeedSuggestions from "./FeedSuggestions";
 
 const Feed = () => {
   return (
@@ -16,6 +18,12 @@ const Feed = () => {
         <section className="col-span-2">
           <Stories />
           <Posts />
+        </section>
+        <section className="hidden xl:inline-grid md:col-span-1">
+          <div className="fixed top-20">
+            <FeedProfile />
+            <FeedSuggestions />
+          </div>
         </section>
       </main>
     </div>
