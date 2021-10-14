@@ -3,37 +3,31 @@ import { Post } from "types/post";
 
 class PostStore {
   posts: Post[] = [];
+  selectedImageToPost: string | ArrayBuffer | null = null;
+  caption: string = "";
 
   constructor() {
     makeAutoObservable(this);
-
-    this.genPost();
   }
 
-  private genPost = () => {
-    this.posts.push(
-      {
-        id: "123",
-        username: "martstech",
-        avatar: "",
-        img: "",
-        caption: "Getting a pretty good start here",
-      },
-      {
-        id: "231",
-        username: "martstech",
-        avatar: "",
-        img: "",
-        caption: "Getting a pretty good start here",
-      },
-      {
-        id: "312",
-        username: "martstech",
-        avatar: "",
-        img: "",
-        caption: "Getting a pretty good start here",
-      }
-    );
+  selectImageToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+
+    if (e.target.files && e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      this.selectedImageToPost = readerEvent.target?.result || null;
+    };
+  };
+
+  removeImageToPost = () => {
+    this.selectedImageToPost = null;
+  };
+
+  setCaption = (caption: string) => {
+    this.caption = caption;
   };
 }
 

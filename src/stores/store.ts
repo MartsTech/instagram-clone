@@ -1,10 +1,12 @@
 import { createContext, useContext } from "react";
+import CommonStore from "./commonStore";
 import FeedStore from "./feedStore";
 import PostStore from "./postStore";
 import StoryStore from "./storyStore";
 import UserStore from "./userStore";
 
 interface Store {
+  commonStore: CommonStore;
   userStore: UserStore;
   storyStore: StoryStore;
   postStore: PostStore;
@@ -12,6 +14,7 @@ interface Store {
 }
 
 export const store: Store = {
+  commonStore: new CommonStore(),
   userStore: new UserStore(),
   storyStore: new StoryStore(),
   postStore: new PostStore(),

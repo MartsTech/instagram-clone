@@ -16,6 +16,7 @@
     "test-all": "yarn check-format && yarn check-lint && yarn check-types && yarn test && yarn build"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
     "faker": "^5.5.3",
     "firebase": "^9.1.2",

@@ -2,9 +2,11 @@ import Header from "components/header/Header";
 import { observer } from "mobx-react-lite";
 import Posts from "modules/posts/Posts";
 import Stories from "modules/stories/Stories";
+import React from "react";
 import { useStore } from "stores/store";
+import FeedCreatePost from "./create/FeedCreate";
 import FeedProfile from "./FeedProfile";
-import FeedSuggestions from "./FeedSuggestions";
+import FeedSuggestions from "./suggestions/FeedSuggestions";
 
 const Feed = () => {
   const { user } = useStore().userStore;
@@ -35,6 +37,7 @@ const Feed = () => {
           </div>
         </section>
       </main>
+      <FeedCreatePost />
     </div>
   );
 };

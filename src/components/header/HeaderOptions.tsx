@@ -12,6 +12,7 @@ import HeaderOptionsItem from "./HeaderOptionsItem";
 
 const HeaderOptions = () => {
   const { user } = useStore().userStore;
+  const { setModalOpen } = useStore().commonStore;
   const router = useRouter();
 
   return (
@@ -25,7 +26,10 @@ const HeaderOptions = () => {
             IconClass="rotate-45"
             count={3}
           />
-          <HeaderOptionsItem Icon={PlusCircleIcon} />
+          <HeaderOptionsItem
+            Icon={PlusCircleIcon}
+            onClick={() => setModalOpen(true)}
+          />
           <HeaderOptionsItem Icon={UserGroupIcon} />
           <HeaderOptionsItem Icon={HeartIcon} />
         </>
