@@ -2,7 +2,10 @@ import {
   addDoc,
   collection,
   doc,
-  onSnapshot,
+  DocumentData,
+  DocumentSnapshot,
+  getDoc,
+  getDocs,
   orderBy,
   query,
   serverTimestamp,
@@ -11,11 +14,12 @@ import {
 import { getDownloadURL, ref, uploadString } from "@firebase/storage";
 import { db, storage } from "config/firebase";
 import { makeAutoObservable, runInAction } from "mobx";
-import { Post } from "types/post";
+import { Post, PostComment } from "types/post";
 import { store } from "./store";
 
 class PostStore {
   postsRegistery = new Map<string, Post>();
+  commentsRegistery: { [id: string]: PostComment[] } = {};
   selectedImageToPost: string | ArrayBuffer | null = null;
   caption = "";
   loading = false;
@@ -31,23 +35,61 @@ class PostStore {
     );
   }
 
-  private getPosts = () => {
-    onSnapshot(
-      query(collection(db, "posts"), orderBy("timestamp", "desc")),
-      (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          const post = {
-            id: doc.id,
-            ...doc.data(),
-            timestamp: new Date(doc.data().timestamp?.toDate()),
-          } as Post;
-
-          runInAction(() => {
-            this.postsRegistery.set(post.id, post);
-          });
-        });
-      }
+  private getPosts = async () => {
+    const postsSnap = await getDocs(
+      query(collection(db, "posts"), orderBy("timestamp", "desc"))
     );
+
+    postsSnap.docs.forEach(async (doc) => {
+      await this.setPostFromDoc(doc);
+    });
+  };
+
+  private setPostFromDoc = async (doc: DocumentSnapshot<DocumentData>) => {
+    if (this.postsRegistery.has(doc.id)) {
+      return;
+    }
+
+    await this.getComments(doc.id);
+
+    const post = {
+      id: doc.id,
+      ...doc.data(),
+      timestamp: new Date(doc.data()?.timestamp?.toDate()),
+    } as Post;
+
+    runInAction(() => {
+      this.postsRegistery.set(post.id, post);
+    });
+  };
+
+  private getComments = async (postId: string) => {
+    if (this.commentsRegistery[postId]) {
+      return;
+    }
+
+    const commentsSnap = await getDocs(
+      query(
+        collection(db, "posts", postId, "comments"),
+        orderBy("timestamp", "desc")
+      )
+    );
+
+    const comments = commentsSnap.docs.map((doc) =>
+      this.getCommentFromDoc(doc)
+    );
+
+    runInAction(() => {
+      this.commentsRegistery[postId] = comments;
+    });
+  };
+
+  private getCommentFromDoc = (doc: DocumentSnapshot<DocumentData>) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+      timestamp: new Date(doc.data()?.timestamp?.toDate()),
+    } as PostComment;
   };
 
   selectImageToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +140,9 @@ class PostStore {
       image: downloadURL,
     });
 
+    const postDoc = await getDoc(docRef);
+    this.setPostFromDoc(postDoc);
+
     store.commonStore.setModalOpen(false);
 
     runInAction(() => {
@@ -109,6 +154,34 @@ class PostStore {
 
   setCaption = (caption: string) => {
     this.caption = caption;
+  };
+
+  postComment = async (comment: string, postId: string) => {
+    if (this.loading) {
+      return;
+    }
+
+    const { user } = store.userStore;
+
+    if (!user) {
+      return;
+    }
+
+    this.loading = true;
+
+    const docRef = await addDoc(collection(db, "posts", postId, "comments"), {
+      comment,
+      username: user.displayName,
+      avatar: user.photoURL,
+      timestamp: serverTimestamp(),
+    });
+
+    const commentDoc = await getDoc(docRef);
+    this.commentsRegistery[postId].push(this.getCommentFromDoc(commentDoc));
+
+    runInAction(() => {
+      this.loading = false;
+    });
   };
 }
 

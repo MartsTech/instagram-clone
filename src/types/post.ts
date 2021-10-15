@@ -6,3 +6,11 @@ export interface Post {
   caption: string;
   timestamp: Date;
 }
+
+export interface PostComment {
+  id: string;
+  comment: string;
+  username: string;
+  avatar: string;
+  timestamp: Date;
+}

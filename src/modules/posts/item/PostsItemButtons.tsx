@@ -4,9 +4,15 @@ import {
   HeartIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/outline";
+import { observer } from "mobx-react-lite";
+import { useStore } from "stores/store";
 import PostsItemButtonsItem from "./PostsItemButtonsItem";
 
 const PostsItemButtons = () => {
+  const { user } = useStore().userStore;
+
+  if (!user) return null;
+
   return (
     <div className="flex justify-between px-4 pt-4">
       <div className="flex space-x-4">
@@ -19,4 +25,4 @@ const PostsItemButtons = () => {
   );
 };
 
-export default PostsItemButtons;
+export default observer(PostsItemButtons);
