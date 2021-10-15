@@ -2,6 +2,7 @@ export interface Post {
   id: string;
   username: string;
   avatar: string;
-  img: string;
+  image: string;
   caption: string;
+  timestamp: Date;
 }
