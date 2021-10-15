@@ -1,6 +1,7 @@
 import { Post } from "types/post";
 import PostItemComments from "./PostItemComments";
 import PostsItemButtons from "./PostsItemButtons";
+import PostsItemCaption from "./PostsItemCaption";
 import PostsItemHeader from "./PostsItemHeader";
 import PostsItemInput from "./PostsItemInput";
 
@@ -15,11 +16,8 @@ const PostsItem: React.FC<PostsItemProps> = ({ post }) => {
     <div className="bg-white my-7 border rounded-sm">
       <PostsItemHeader avatar={avatar} username={username} />
       <img className="object-cover" loading="lazy" src={image} alt="post" />
-      <PostsItemButtons />
-      <p className="p-5 truncate">
-        <span className="font-bold mr-1">{username} </span>
-        {caption}
-      </p>
+      <PostsItemButtons postId={id} />
+      <PostsItemCaption id={id} username={username} caption={caption} />
       <PostItemComments postId={post.id} />
       <PostsItemInput postId={id} />
     </div>

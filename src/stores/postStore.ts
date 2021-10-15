@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   DocumentSnapshot,
@@ -9,17 +10,19 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
   updateDoc,
 } from "@firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "@firebase/storage";
 import { db, storage } from "config/firebase";
 import { makeAutoObservable, runInAction } from "mobx";
-import { Post, PostComment } from "types/post";
+import { Post, PostComment, PostLike } from "types/post";
 import { store } from "./store";
 
 class PostStore {
   postsRegistery = new Map<string, Post>();
-  commentsRegistery: { [id: string]: PostComment[] } = {};
+  commentsRegistery: { [postId: string]: PostComment[] } = {};
+  likesRegistery: { [postId: string]: PostLike[] } = {};
   selectedImageToPost: string | ArrayBuffer | null = null;
   caption = "";
   loading = false;
@@ -51,6 +54,7 @@ class PostStore {
     }
 
     await this.getComments(doc.id);
+    await this.getLikes(doc.id);
 
     const post = {
       id: doc.id,
@@ -90,6 +94,27 @@ class PostStore {
       ...doc.data(),
       timestamp: new Date(doc.data()?.timestamp?.toDate()),
     } as PostComment;
+  };
+
+  private getLikes = async (postId: string) => {
+    if (this.likesRegistery[postId]) {
+      return;
+    }
+
+    const likesSnap = await getDocs(collection(db, "posts", postId, "likes"));
+
+    const likes = likesSnap.docs.map((doc) => this.getLikeFromDoc(doc));
+
+    runInAction(() => {
+      this.likesRegistery[postId] = likes;
+    });
+  };
+
+  private getLikeFromDoc = (doc: DocumentSnapshot<DocumentData>) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as PostLike;
   };
 
   selectImageToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,6 +206,43 @@ class PostStore {
 
     runInAction(() => {
       this.loading = false;
+    });
+  };
+
+  likePost = async (postId: string, isLiked: boolean) => {
+    const { user } = store.userStore;
+
+    if (!user) {
+      return;
+    }
+
+    const docRef = doc(db, "posts", postId, "likes", user.uid);
+
+    if (isLiked) {
+      await deleteDoc(docRef);
+
+      runInAction(() => {
+        this.likesRegistery[postId] = this.likesRegistery[postId].filter(
+          (like) => like.id !== user.uid
+        );
+      });
+
+      return;
+    }
+
+    await setDoc(docRef, {
+      username: user.displayName,
+    });
+
+    const likeDoc = await getDoc(docRef);
+    const like = this.getLikeFromDoc(likeDoc);
+
+    runInAction(() => {
+      if (this.likesRegistery[postId].length > 0) {
+        this.likesRegistery[postId].push(like);
+      } else {
+        this.likesRegistery[postId] = [like];
+      }
     });
   };
 }

@@ -43,6 +43,7 @@ class UserStore {
   setUser = (user: FirebaseUser | null) => {
     if (user) {
       this.user = {
+        uid: user.uid,
         email: user.email!,
         displayName: user.displayName!.split(" ").join("_").toLocaleLowerCase(),
         photoURL: user.photoURL,

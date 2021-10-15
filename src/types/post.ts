@@ -14,3 +14,8 @@ export interface PostComment {
   avatar: string;
   timestamp: Date;
 }
+
+export interface PostLike {
+  id: string;
+  username: string;
+}
