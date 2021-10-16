@@ -31,7 +31,7 @@
 ---
 
 ## Demo
-Here is a working live demo [here](https://instagram-martstech.vercel.app/)  
+Here is a working live demo [here](https://instagram-clone-martstech.vercel.app/)  
 
 ---
 
