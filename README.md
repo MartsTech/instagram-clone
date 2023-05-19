@@ -1,7 +1,5 @@
 <h1 align="center">
-  <a href="https://instagram-clone-martstech.vercel.app/">
-    <img width="150px" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram Logo" />
-  </a>
+  <img width="150px" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram Logo" />
   <br />
   Instagram Clone
   <br />
@@ -18,7 +16,6 @@
 </p>
 
 <p align="center">
-  <a href="#demo">Demo</a> •
   <a href="#key-features">Key Features</a> •
   <a href="#key-technologies">Key Technologies</a> •
   <a href="#setup">Setup</a> •
@@ -27,11 +24,6 @@
 </p>
 
 ![Text Editor Screenshot](public/screenshots/feed.png?raw=true "Feed Screenshot")
-
----
-
-## Demo
-Here is a working live demo [here](https://instagram-clone-martstech.vercel.app/)  
 
 ---
 
